@@ -1,18 +1,18 @@
 const NodeHelper = require("node_helper");
-const exec = require("child_process").exec;
+const childProcess = require("child_process");
+const exec = require("util").promisify(childProcess.exec);
 
 module.exports = NodeHelper.create({
 	start: function () {
 		this.started = false;
-		this.isMonitorOn(function(result) {
-			console.log("MMM-MotionDetector: monitor on " + result);
-		});
+		const result = this.isMonitorOnAsync();
+		console.log("MMM-MotionDetector: monitor on " + result);
 	},
 
 	activateMonitor: function () {
 		this.isMonitorOn(function(result) {
 			if (!result) {
-				exec("vcgencmd display_power 1", function(err, out, code) {
+				childProcess.exec("vcgencmd display_power 1", function(err, out, code) {
 					if (err) {
 						console.error("MMM-MotionDetector: error activating monitor: " + code);
 					} else {
@@ -27,7 +27,7 @@ module.exports = NodeHelper.create({
 	deactivateMonitor: function () {
 		this.isMonitorOn(function(result) {
 			if (result) {
-				exec("vcgencmd display_power 0", function(err, out, code) {
+				childProcess.exec("vcgencmd display_power 0", function(err, out, code) {
 					if (err) {
 						console.error("MMM-MotionDetector: error deactivating monitor: " + code);
 					} else {
@@ -49,6 +49,17 @@ module.exports = NodeHelper.create({
 			console.log("MMM-MotionDetector: monitor " + out);
 			resultCallback(out.includes("=1"));
 		});
+	},
+
+	isMonitorOnAsync: async () => {
+		try {
+			const out = await exec("vcgencmd display_power");
+			console.log("MMM-MotionDetector: monitor " + out);
+			return out.includes("=1");
+		} catch (error) {
+			console.error("MMM-MotionDetector: error calling monitor status: " + error);
+			return false;
+		}
 	},
 
 	// Subclass socketNotificationReceived received.
