@@ -8,6 +8,7 @@ Module.register("MMM-MotionDetector2", {
 
 	lastScoreDetected: null,
 	lastTimeMotionDetected: null,
+	recentMotionDetected: null,
 	lastTimePoweredOff: null,
 	percentagePoweredOff: 0,
 	poweredOff: false,
@@ -84,8 +85,12 @@ Module.register("MMM-MotionDetector2", {
 				const currentDate = new Date();
 				this.percentagePoweredOff = (100 * this.poweredOffTime / (currentDate.getTime() - this.timeStarted)).toFixed(2);
 				if (score > this.config.scoreThreshold) {
-					this.sendSocketNotification("MOTION_DETECTED", {score: score});
-					this.sendNotification("MOTION_DETECTED", {score: score});
+					if (currentDate > this.recentMotionDetected) {
+						this.sendSocketNotification("MOTION_DETECTED", {score: score});
+						this.sendNotification("MOTION_DETECTED", {score: score});
+						this.recentMotionDetected = currentDate;
+					 	this.recentMotionDetected.setSeconds(this.recentMotionDetected.getSeconds() + 5);
+					}
 					if (this.poweredOff) {
 						this.poweredOffTime = this.poweredOffTime + (currentDate.getTime() - this.lastTimePoweredOff.getTime());
 						this.poweredOff = false;
