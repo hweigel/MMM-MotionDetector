@@ -1,4 +1,4 @@
-Module.register("MMM-MotionDetector", {
+Module.register("MMM-MotionDetector2", {
 
 	defaults: {
 		captureIntervalTime: 1000, // 1 second
@@ -84,10 +84,10 @@ Module.register("MMM-MotionDetector", {
 				const currentDate = new Date();
 				this.percentagePoweredOff = (100 * this.poweredOffTime / (currentDate.getTime() - this.timeStarted)).toFixed(2);
 				if (score > this.config.scoreThreshold) {
+					this.sendSocketNotification("MOTION_DETECTED", {score: score});
+					this.sendNotification("MOTION_DETECTED", {score: score});
 					if (this.poweredOff) {
 						this.poweredOffTime = this.poweredOffTime + (currentDate.getTime() - this.lastTimePoweredOff.getTime());
-						this.sendSocketNotification("MOTION_DETECTED", {score: score});
-						this.sendNotification("MOTION_DETECTED", {score: score});
 						this.poweredOff = false;
 					}
 					this.lastTimeMotionDetected = currentDate;
