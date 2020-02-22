@@ -121,10 +121,10 @@ config: {
 ## Notifications send
 
 | Notification          | Payload       | Description
-| --------------------- | ------------- | ------------
-| `MOTION_DETECTED`     | score         | score calculated by the diff-cam-engine, 0 or greater |
-| `DEACTIVATE_MONITOR`  | percentageOff | percentage of time the monitor was deactivated since the module started |
-
+| --------------------- | -------------------- | ------------
+| `MOTION_DETECTED`     | score, percentageOff | score calculated by the diff-cam-engine, 0 or greater |
+| `DEACTIVATE_MONITOR`  | score, percentageOff | percentage of time the monitor was deactivated since the module started |
+| `MOTION_TRIGGERED`    | score, percentageOff | only sent when screen is already on |
 
 ## Changelog
 
