@@ -91,9 +91,10 @@ Module.register("MMM-MotionDetector2", {
 						this.recentMotionDetected = currentDate;
 					 	this.recentMotionDetected.setSeconds(this.recentMotionDetected.getSeconds() + 5);
 						if (!this.poweredOff) {
-							this.sendSocketNotification("MOTION_TRIGGERED", {score: score, percentageOff: this.percentagePoweredOff});
-							this.sendNotification("MOTION_TRIGGERED", {score: score, percentageOff: this.percentagePoweredOff});
+		this.sendSocketNotification("MOTION_TRIGGERED", {score: score, percentageOff: this.percentagePoweredOff});
+		this.sendNotification("MOTION_TRIGGERED", {score: score, percentageOff: this.percentagePoweredOff});
 						}
+					}
 					if (this.poweredOff) {
 						this.poweredOffTime = this.poweredOffTime + (currentDate.getTime() - this.lastTimePoweredOff.getTime());
 						this.poweredOff = false;
