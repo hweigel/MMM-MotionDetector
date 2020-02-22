@@ -53,6 +53,9 @@ module.exports = NodeHelper.create({
 
 	// Subclass socketNotificationReceived received.
 	socketNotificationReceived: function (notification, payload) {
+		if (notification === "MOTION_TRIGGERED") {
+			console.log("MMM-MotionDetector: MOTION_TRIGGERED,  score " + payload.score + ", percentage off " + payload.percentageOff);
+		}
 		if (notification === "MOTION_DETECTED" && this.started === false) {
 			console.log("MMM-MotionDetector: MOTION_DETECTED, score " + payload.score + ", percentage off " + payload.percentageOff);
 			this.started = true;
@@ -62,6 +65,6 @@ module.exports = NodeHelper.create({
 			console.log("MMM-MotionDetector: DEACTIVATE_MONITOR, percentage off: " + payload.percentageOff);
 			this.started = true;
 			this.deactivateMonitor();
-		}
+		}	
 	}
 });
