@@ -90,6 +90,10 @@ Module.register("MMM-MotionDetector2", {
 						this.sendNotification("MOTION_DETECTED", {"score": score, percentageOff: this.percentagePoweredOff});
 						this.recentMotionDetected = currentDate;
 					 	this.recentMotionDetected.setSeconds(this.recentMotionDetected.getSeconds() + 5);
+						if (!this.poweredOff) {
+							this.sendSocketNotification("MOTION_TRIGGERED");
+							this.sendNotification("MOTION_TRIGGERED");
+						}
 					}
 					if (this.poweredOff) {
 						this.poweredOffTime = this.poweredOffTime + (currentDate.getTime() - this.lastTimePoweredOff.getTime());
