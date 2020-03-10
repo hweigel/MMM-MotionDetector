@@ -1,6 +1,7 @@
 Module.register("MMM-MotionDetector2", {
 
 	defaults: {
+		header: "MMM-MotionDetector2",
 		captureIntervalTime: 1000, // 1 second
 		scoreThreshold: 20,
 		timeout: 120000 // 2 minutes
