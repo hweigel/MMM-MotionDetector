@@ -18,7 +18,7 @@ Module.register("MMM-MotionDetector2", {
 	error: null,
 
 	getHeader: function () {
-		return "MMM-MotionDetector";
+		return this.config.header;
 	},
 
 	getScripts: function () {
