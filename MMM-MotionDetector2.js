@@ -12,6 +12,7 @@ Module.register("MMM-MotionDetector2", {
 	recentMotionDetected: null,
 	lastTimePoweredOff: null,
 	percentagePoweredOff: 0,
+	percentagePoweredOffShort: 0,
 	poweredOff: false,
 	poweredOffTime: 0,
 	timeStarted: null,
@@ -38,6 +39,7 @@ Module.register("MMM-MotionDetector2", {
 			lastScoreDetected: this.lastScoreDetected,
 			lastTimeMotionDetected: this.lastTimeMotionDetected.toLocaleTimeString(),
 			percentagePoweredOff: this.percentagePoweredOff,
+			percentagePoweredOffShort: this.percentagePoweredOffShort,
 			error: this.error
 		};
 	},
@@ -85,6 +87,7 @@ Module.register("MMM-MotionDetector2", {
 				const score = payload.score;
 				const currentDate = new Date();
 				this.percentagePoweredOff = (100 * this.poweredOffTime / (currentDate.getTime() - this.timeStarted)).toFixed(2);
+				this.percentagePoweredOffShort = Math.round(this.percentagePoweredOff);
 				if (score > this.config.scoreThreshold) {
 					if (currentDate > this.recentMotionDetected) {
 						this.recentMotionDetected = currentDate;
