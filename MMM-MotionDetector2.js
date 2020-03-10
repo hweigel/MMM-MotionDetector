@@ -51,7 +51,7 @@ Module.register("MMM-MotionDetector2", {
 	start: function () {
 		Log.info("MMM-MotionDetector: starting up");
 
-		this.data.header = "MMM-MotionDetector";
+		this.data.header = this.config.header;
 		this.lastScoreDetected = 0;
 		this.lastTimeMotionDetected = new Date();
 		this.lastTimePoweredOff = new Date();
