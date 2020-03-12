@@ -2,6 +2,6 @@
 {% if error %}
     <div class="light small bold">{{error}}</div>
 {% else %}
-    <div class="light small normal">Screen powered off <span class="bright">{{percentagePoweredOffShort}} %</span> during the last <span class="bright">{{duration}}</span></div>
+    <div class="light small normal">Screen powered off <span class="bright">{{percentagePoweredOffShort}} %</span> during the last <span class="bright">{{duration}}</span>(score: <span class="bright">{{lastScoreDetected}}</span>)</div>
 {% endif %}
 </div>
